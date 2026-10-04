@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carta — система сильной карточки для Ozon и Wildberries</title>
+<meta name="description" content="Расширение для Ozon и Wildberries: аудит карточки, все негативные отзывы и вопросы покупателей в Excel и промпты для описания без выдумок. Плюс руководство и таблица юнит-экономики.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F3EE; --bg-2:#EFEAE2; --card:#FFFDF9; --text:#1E1E1E; --muted:#5E5852; --line:#D9D1C4;
+  --night:#1E1E1E; --night-2:#2A2826; --night-text:#F6F3EE; --night-muted:#CFC8BD;
+  --gold:#A8844F; --gold-d:#7A5E33; --gold-l:#C4A26E; --red:#9B3B2E; --green:#3F6B4A;
+  --btn-bg:#1E1E1E; --btn-text:#F6F3EE;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:Manrope,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#191817; --bg-2:#211F1D; --card:#24221F; --text:#F2EEE7; --muted:#BDB5A8; --line:#3A3632;
+    --night:#0F0F0E; --night-2:#1B1A18; --gold-d:#C4A26E; --btn-bg:#F2EEE7; --btn-text:#1E1E1E;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191817; --bg-2:#211F1D; --card:#24221F; --text:#F2EEE7; --muted:#BDB5A8; --line:#3A3632;
+  --night:#0F0F0E; --night-2:#1B1A18; --gold-d:#C4A26E; --btn-bg:#F2EEE7; --btn-text:#1E1E1E;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--gold-d)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+section{padding:96px 0}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0}
+h2{font-size:clamp(36px,4.4vw,54px);line-height:1.06;margin-bottom:20px}
+.sub{color:var(--muted);max-width:60ch;margin:0 0 48px;font-size:17px}
+.btn{display:inline-block;padding:18px 34px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;border:0;cursor:pointer;text-align:center}
+.btn-light{background:#F6F3EE;color:#1E1E1E}.btn-light:hover{background:#E8E2D8}
+.btn-dark{background:var(--btn-bg);color:var(--btn-text)}.btn-dark:hover{opacity:.9}
+.night{background:var(--night);color:var(--night-text)}
+.night .sub{color:var(--night-muted)}
+.tint{background:var(--bg-2)}
+
+/* Обложка */
+.hero{padding:36px 0 96px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:72px}
+.logo{font-family:var(--serif);font-size:32px;letter-spacing:.04em}
+.top nav{display:flex;gap:28px;font-size:14px}
+.top nav a{color:var(--night-muted);text-decoration:none}.top nav a:hover{color:var(--night-text)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+.rule{width:64px;height:2px;background:var(--gold-l);margin-bottom:28px}
+.hero h1{font-weight:300;font-size:clamp(46px,6.6vw,86px);line-height:1.02;margin-bottom:26px}
+.hero p.lead{font-size:18px;color:var(--night-muted);max-width:540px;margin:0 0 34px}
+.cta-row{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.cta-row span{font-size:14px;color:var(--night-muted)}
+
+/* Живая панель */
+.panel{background:#F6F3EE;color:#1E1E1E;border-radius:16px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.7);max-width:400px;width:100%;justify-self:end}
+.panel-hd{background:#2A2826;color:#F6F3EE;display:flex;justify-content:space-between;align-items:center;padding:12px 18px}
+.panel-hd .logo{font-size:24px}
+.score{font-family:var(--serif);font-size:30px;line-height:1}.score small{font-size:14px;color:#CFC8BD}
+.panel-bd{padding:14px 18px 18px;font-size:13.5px}
+.stats{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:12.5px;font-weight:600;margin-bottom:8px}
+.verdict{font-weight:700;margin:2px 0 10px}
+.verdict.bad{color:#9B3B2E}.verdict.mid{color:#7A5E33}.verdict.good{color:#3F6B4A}
+.p-h{font-size:12px;font-weight:600;color:#5E5852;margin:12px 0 6px}
+.issue{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-left:2px solid #A8844F;padding:4px 0 4px 10px;margin-bottom:6px;transition:opacity .35s}
+.issue.err{border-left-color:#9B3B2E}
+.issue.fixed{opacity:.45;text-decoration:line-through;border-left-color:#3F6B4A}
+.issue button{flex:none;font:600 11.5px var(--sans);border:1px solid #1E1E1E;background:#1E1E1E;color:#F6F3EE;border-radius:6px;padding:4px 9px;cursor:pointer}
+.issue.fixed button{background:transparent;color:#3F6B4A;border-color:#3F6B4A;cursor:default}
+.fb{font-size:12.5px;line-height:1.55}
+.p-btns{display:flex;gap:6px;margin-top:12px}
+.p-btn{flex:1;text-align:center;font:600 12px var(--sans);padding:8px;border-radius:8px;background:#1E1E1E;color:#F6F3EE}
+.p-btn.gh{background:transparent;color:#1E1E1E;border:1px solid #1E1E1E}
+.demo-cap{font-size:13px;color:var(--night-muted);margin:14px 4px 0;max-width:400px;justify-self:end}
+
+/* Проблемы */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.pain{border-top:1px solid var(--line);padding-top:22px}
+.pain b{display:block;font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;margin-bottom:10px}
+.pain p{margin:0;color:var(--muted)}
+
+/* Что внутри */
+.kit{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px}
+.kit-item{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:30px 28px;display:flex;flex-direction:column}
+.kit-item.main{background:var(--night);color:var(--night-text);border-color:var(--night)}
+.kit-item .tag{font-size:13px;font-weight:600;color:var(--gold-d);margin-bottom:12px}
+.kit-item.main .tag{color:var(--gold-l)}
+.kit-item h3{font-size:30px;line-height:1.1;margin-bottom:14px}
+.kit-item ul{list-style:none;margin:0;padding:0;font-size:15px}
+.kit-item li{padding:8px 0;border-top:1px solid var(--line);color:var(--muted)}
+.kit-item.main li{border-top-color:#3a3734;color:var(--night-muted)}
+.kit-item li b{color:var(--text);font-weight:600}
+.kit-item.main li b{color:var(--night-text)}
+
+/* Как работает */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+.flow div{padding:28px 24px 0 0}
+.flow span{font-family:var(--serif);font-size:44px;color:var(--gold);line-height:1;display:block;margin-bottom:12px}
+.flow b{display:block;font-size:17px;margin-bottom:6px}
+.flow p{margin:0;color:var(--muted);font-size:15px}
+
+/* Отчёт */
+.report{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.xl{background:#FFFDF9;color:#1E1E1E;border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 24px 48px -30px rgba(30,30,30,.5)}
+.xl-band{background:#1E1E1E;color:#F6F3EE;padding:14px 18px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid #A8844F}
+.xl-band .l{font-family:Georgia,serif;font-size:24px}.xl-band small{font-family:Georgia,serif;font-size:13px}
+.xl-kpi{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid #A8844F;margin:16px 16px 0}
+.xl-kpi div{text-align:center;padding:12px 4px;font-size:10px;font-weight:700;color:#5E5852;line-height:1.3}
+.xl-kpi b{display:block;font-family:Georgia,serif;font-weight:400;font-size:26px;color:#1E1E1E}
+.xl-rows{padding:14px 16px 6px;font-size:12px}
+.xl-rows div{display:grid;grid-template-columns:70px 46px 1fr;gap:10px;align-items:center;padding:3px 0}
+.xl-rows i{display:block;height:8px;background:#C4A26E}
+.xl-tabs{display:flex;gap:4px;padding:10px 16px 16px;font-size:11px;font-weight:600}
+.xl-tabs span{padding:3px 9px;color:#fff}
+.checks{list-style:none;margin:0;padding:0}
+.checks li{padding:14px 0 14px 30px;border-bottom:1px solid var(--line);position:relative}
+.checks li::before{content:"";position:absolute;left:4px;top:22px;width:12px;height:6px;border:solid var(--gold);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+
+/* До и после */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ba div{border-radius:6px;padding:28px 30px}
+.ba .before{background:var(--bg-2);border:1px solid var(--line)}
+.ba .after{background:var(--card);border:1px solid var(--gold)}
+.ba h3{font-family:var(--sans);font-size:14px;font-weight:700;margin-bottom:12px}
+.ba .before h3{color:var(--red)}.ba .after h3{color:var(--green)}
+.ba .before p{color:var(--muted)}
+.ba p{margin:0 0 12px;font-size:15.5px}
+
+/* Нейросети */
+.ai{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ai div{border:1px solid #3a3734;border-radius:6px;padding:26px}
+.ai b{display:block;font-family:var(--serif);font-weight:400;font-size:28px;color:var(--night-text);margin-bottom:8px}
+.ai p{margin:0;color:var(--night-muted);font-size:15px}
+.meter{display:flex;gap:4px;margin:12px 0 0}.meter i{width:22px;height:5px;background:#4a4642}.meter i.f{background:var(--gold-l)}
+
+/* Автор */
+.author{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start}
+.author blockquote{margin:0;font-family:var(--serif);font-size:clamp(26px,3vw,34px);line-height:1.3}
+.author p{color:var(--muted)}
+.nums{display:flex;gap:44px;margin-top:28px;flex-wrap:wrap}
+.nums div{font-size:13px;color:var(--muted);line-height:1.3}
+.nums b{display:block;font-family:var(--serif);font-weight:400;font-size:40px;color:var(--text);line-height:1.1}
+
+/* Для кого */
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chips span{padding:13px 22px;border:1px solid var(--line);border-radius:999px;font-size:15px;background:var(--card)}
+
+/* Цена */
+.price{text-align:center}
+.price h2{margin-bottom:12px}
+.amount{font-family:var(--serif);font-weight:300;font-size:clamp(76px,9vw,112px);line-height:1;margin:22px 0 12px}
+.price .incl{list-style:none;margin:0 auto 34px;padding:0;max-width:440px;text-align:left}
+.price .incl li{padding:10px 0 10px 30px;border-bottom:1px solid var(--line);position:relative}
+.price .incl li::before{content:"";position:absolute;left:4px;top:18px;width:12px;height:6px;border:solid var(--gold);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+.price small{display:block;color:var(--muted);margin-top:16px;font-size:14px}
+
+/* Вопросы */
+.faq{max-width:780px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;font-weight:600;font-size:17px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:8px;top:28px;width:10px;height:10px;border:solid var(--gold-d);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(225deg);top:32px}
+.faq details p{color:var(--muted);margin:0 0 20px}
+
+footer{background:var(--night);color:var(--night-muted);padding:56px 0;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+footer .logo{color:var(--night-text);font-size:28px;margin-bottom:6px}
+footer nav{display:flex;gap:28px;flex-wrap:wrap}
+footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
+
+@media (max-width:900px){
+  section{padding:72px 0}
+  .hero-grid,.report,.author,.ba{grid-template-columns:1fr;gap:40px}
+  .panel,.demo-cap{justify-self:start}
+  .g3,.ai{grid-template-columns:1fr;gap:28px}
+  .kit{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr 1fr;gap:0 24px}
+  .top nav{display:none}
+  .top{margin-bottom:48px}
+}
+@media (max-width:520px){
+  .flow{grid-template-columns:1fr}
+  .btn{display:block;width:100%}
+  .cta-row{flex-direction:column;align-items:stretch}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="night hero">
+  <div class="wrap">
+    <div class="top"><span class="logo">Carta</span>
+      <nav aria-label="Разделы"><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#example">Пример</a><a href="#price">Стоимость</a><a href="#faq">Вопросы</a></nav>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <div class="rule"></div>
+        <h1>Ваш товар хороший. Проблема в карточке.</h1>
+        <p class="lead">Расширение для Ozon и Wildberries находит ошибки в карточке, собирает все жалобы и вопросы покупателей и готовит задание для нейросети. На выходе — описание без воды и выдумок, которое отвечает на то, что действительно волнует покупателя.</p>
+        <div class="cta-row"><a class="btn btn-light" href="#price">Получить Carta</a><span>Расширение, руководство и таблица юнит-экономики</span></div>
+      </div>
+      <div style="display:grid">
+        <div class="panel" id="demo" aria-label="Пример панели Carta на карточке товара">
+          <div class="panel-hd"><span class="logo">Carta</span><span class="score"><span id="sc">55</span><small>/100</small></span></div>
+          <div class="panel-bd">
+            <div class="stats"><span>★ 4,8</span><span>2 140 отзывов</span><span>96 вопросов</span><span>4 фото</span></div>
+            <div class="verdict mid" id="vd">Есть что улучшить</div>
+            <div class="p-h">Что исправить</div>
+            <div class="issue err" data-p="15"><span>Упоминается другая площадка. Это нарушает правила — уберите.</span><button type="button">Исправить</button></div>
+            <div class="issue" data-p="15"><span>В названии повторяются слова: термокружка, кружка.</span><button type="button">Исправить</button></div>
+            <div class="issue" data-p="15"><span>Мало изображений (4). Для сильной карточки нужно 5–8.</span><button type="button">Исправить</button></div>
+            <div class="p-h">Отзывы и вопросы</div>
+            <div class="fb">Оценки на карточке: 1–3 ★ — 38, 4–5 ★ — 2 102</div>
+            <div class="fb">Негативных отзывов с текстом: 31</div>
+            <div class="fb">Собрано вопросов: 96 из 96</div>
+            <div class="p-btns"><span class="p-btn">Скачать Excel</span><span class="p-btn gh">Мой товар</span></div>
+          </div>
+        </div>
+        <p class="demo-cap">Так Carta выглядит на странице товара. Нажмите «Исправить» — и посмотрите, как растёт оценка.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <h2>Знакомо?</h2>
+    <p class="sub">Карточка есть, а заказов мало. Обычно причина в одном из трёх.</p>
+    <div class="g3">
+      <div class="pain"><b>Карточку не находят</b><p>Ключи свалены в название, а узких запросов, по которым конкурентов мало, в карточке нет.</p></div>
+      <div class="pain"><b>Находят, но не покупают</b><p>Описание обещает «премиум» и «тепло», но молчит о том, о чём покупатели спрашивают и на что жалуются.</p></div>
+      <div class="pain"><b>Помощь стоит дорого</b><p>Сервисы аналитики, SEO-специалисты и копирайтеры съедают бюджет, которого и так немного.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="inside">
+  <div class="wrap">
+    <h2>Что внутри</h2>
+    <p class="sub">Инструмент, который делает работу за вас, руководство, которое объясняет каждую мелочь, и бонус, который показывает, сколько вы на самом деле зарабатываете.</p>
+    <div class="kit">
+      <div class="kit-item main">
+        <div class="tag">Главное</div>
+        <h3>Расширение Carta для Ozon и Wildberries</h3>
+        <ul>
+          <li><b>Панель на карточке</b> — оценка из 100, рейтинг, отзывы, вопросы, фото и видео прямо под ценой</li>
+          <li><b>Что исправить</b> — другие площадки и контакты в тексте, повторы и капслок, латиница, короткое описание, мало фото</li>
+          <li><b>Все негативные отзывы и все вопросы</b> за секунды — даже на карточках с тысячами отзывов</li>
+          <li><b>Excel-отчёт</b> в стиле Carta: точное распределение звёзд, жалобы и вопросы с ответами продавца</li>
+          <li><b>Готовые промпты</b> для описания и визуала с данными вашего товара</li>
+        </ul>
+      </div>
+      <div class="kit-item">
+        <div class="tag">Руководство</div>
+        <h3>Интерактивная методичка</h3>
+        <ul>
+          <li><b>Установка и первая карточка</b> — чек-листы с прогрессом</li>
+          <li><b>Какую нейросеть выбрать</b> — по нашим проверкам</li>
+          <li><b>Оба промпта</b> для работы вручную</li>
+          <li><b>Тест «можно или нельзя»</b> — как проверять ответ нейросети</li>
+        </ul>
+      </div>
+      <div class="kit-item">
+        <div class="tag">Бонус</div>
+        <h3>Таблица юнит-экономики</h3>
+        <ul>
+          <li><b>Wildberries и Ozon</b>, схемы FBO и FBS</li>
+          <li><b>Логистика WB по габаритам</b> по официальной формуле</li>
+          <li><b>Невыкупы, хранение, приёмка</b> — всё, о чём забывают</li>
+          <li><b>Цена безубыточности</b> и «что будет, если»</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>Как это работает</h2>
+    <p class="sub">От открытой карточки до готового описания — за несколько минут.</p>
+    <div class="flow">
+      <div><span>1</span><b>Откройте карточку</b><p>Под ценой появится панель Carta с оценкой и ошибками.</p></div>
+      <div><span>2</span><b>Соберите голос покупателей</b><p>Расширение само соберёт негативные отзывы и вопросы — скачайте их в Excel.</p></div>
+      <div><span>3</span><b>Скопируйте промпт</b><p>Данные товара, жалобы и вопросы уже подставлены.</p></div>
+      <div><span>4</span><b>Получите описание</b><p>Нейросеть подберёт ключи, проверит себя и выдаст текст, готовый к публикации.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap report">
+    <div class="xl" aria-label="Пример Excel-отчёта Carta">
+      <div class="xl-band"><span class="l">Carta</span><small>Отчёт по отзывам и вопросам</small></div>
+      <div class="xl-kpi"><div><b>4,9 ★</b>Рейтинг</div><div><b>46</b>С текстом</div><div><b>46</b>Негатив</div><div><b>178</b>Вопросов</div></div>
+      <div class="xl-rows">
+        <div><span style="color:#A8844F">★★★★★</span><b>3 120</b><i style="width:96%"></i></div>
+        <div><span style="color:#A8844F">★★★★☆</span><b>72</b><i style="width:4%"></i></div>
+        <div><span style="color:#A8844F">★★★☆☆</span><b>21</b><i style="width:2%"></i></div>
+        <div><span style="color:#A8844F">★★☆☆☆</span><b>13</b><i style="width:1%"></i></div>
+        <div><span style="color:#A8844F">★☆☆☆☆</span><b>12</b><i style="width:1%"></i></div>
+      </div>
+      <div class="xl-tabs"><span style="background:#1E1E1E">Итог</span><span style="background:#9B3B2E">Негативные</span><span style="background:#A8844F">Вопросы</span></div>
+    </div>
+    <div>
+      <h2>Голос покупателей в одном файле</h2>
+      <p class="sub" style="margin-bottom:24px">Положительные отзывы в духе «всё отлично» почти ничего не говорят о том, что исправить. Поэтому Carta собирает то, что действительно полезно.</p>
+      <ul class="checks">
+        <li>Точное распределение звёзд по всей карточке</li>
+        <li>Все негативные отзывы с текстом — от самых низких оценок</li>
+        <li>Все вопросы покупателей и ответы продавца, неотвеченные отмечены</li>
+        <li>Оформленный отчёт, который не стыдно показать партнёру</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="example">
+  <div class="wrap">
+    <h2>До и после</h2>
+    <p class="sub">Реальная карточка детского спортивного костюма. Справа — что выдала бесплатная нейросеть по промпту Carta.</p>
+    <div class="ba">
+      <div class="before"><h3>До</h3><p>Стильный и уютный детский костюм премиум-класса — незаменимая вещь в любом гардеробе! Обеспечит ребёнку тепло и комфорт в любую погоду и непременно понравится детям.</p><p style="font-size:14px">Оценки без фактов, обещания, которых нет в характеристиках, и ни одного ответа на вопросы покупателей.</p></div>
+      <div class="after"><h3>После</h3><p>Детский спортивный костюм-двойка для мальчиков и девочек в однотонном графитовом цвете. Он сшит из футера-трёхнитки — трикотажа из 100% хлопка с начёсом на изнанке. В комплект входят худи с капюшоном и брюки.</p><p>Брюки свободной формы, с карманами и широким поясом на шнурке, по низу — эластичные манжеты. Повседневный комплект для прогулок, садика и школы. Стирать можно при 30 градусах. Перед покупкой сверьтесь с таблицей размеров.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="night">
+  <div class="wrap">
+    <h2>Работает с бесплатными нейросетями</h2>
+    <p class="sub">Промпты Carta прошли пять кругов проверки на реальных карточках: каждое правило появилось после конкретной ошибки нейросети.</p>
+    <div class="ai">
+      <div><b>Claude и ChatGPT</b><p>Самые сильные модели — лучше всего держат правила. Если есть доступ, используйте их.</p><div class="meter"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div>
+      <div><b>Алиса</b><p>Лучший результат среди бесплатных в наших проверках: без выдумок и со связным текстом.</p><div class="meter"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div>
+      <div><b>GigaChat</b><p>Справляется, но итоговый текст стоит перечитывать внимательнее.</p><div class="meter"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap author">
+    <div>
+      <blockquote>«Хороший товар продаётся не сам по себе. Его продаёт карточка».</blockquote>
+      <div class="nums"><div><b>4 года</b>в работе с маркетплейсами</div><div><b>1000+</b>артикулов в кабинете</div></div>
+    </div>
+    <div>
+      <h2 style="font-size:clamp(30px,3.4vw,40px)">Кто стоит за Carta</h2>
+      <p>Четыре года я веду кабинет продавца с тысячей с лишним артикулов. Carta — моя рабочая система, упакованная в инструмент: то, на что у менеджера уходят часы, расширение делает за минуты.</p>
+      <p>Я не обещаю «топ за три дня» — так никто честный не говорит. Я обещаю, что ваша карточка станет понятной для покупателя и честной по отношению к нему.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <h2>Для кого</h2>
+    <p class="sub">Для продавцов, которые делают карточки сами и хотят понимать, что в них работает.</p>
+    <div class="chips"><span>Продавцы на Ozon</span><span>Продавцы на Wildberries</span><span>Новички и опытные селлеры</span><span>Менеджеры маркетплейсов</span><span>Любая категория товаров</span></div>
+  </div>
+</section>
+
+<section id="price">
+  <div class="wrap price">
+    <h2>Всё для сильной карточки</h2>
+    <div class="amount">990 ₽</div>
+    <ul class="incl">
+      <li>Расширение Carta для Ozon и Wildberries</li>
+      <li>Интерактивное руководство с промптами</li>
+      <li>Таблица юнит-экономики WB и Ozon — в подарок</li>
+    </ul>
+    <a class="btn btn-dark" href="[ССЫЛКА НА ОПЛАТУ]">Купить Carta</a>
+    <small>Разовая оплата. Сразу после оплаты откроется страница со всеми файлами для скачивания, а чек придёт на почту.</small>
+    <small>Нажимая «Купить Carta», вы принимаете условия <a href="oferta.html">оферты</a> и <a href="privacy.html">политики конфиденциальности</a>.</small>
+  </div>
+</section>
+
+<section class="tint" id="faq">
+  <div class="wrap">
+    <h2>Вопросы</h2>
+    <div class="faq">
+      <details><summary>Как установить расширение?</summary><p>За пять минут по пошаговой инструкции из руководства. Подходят Google Chrome и Яндекс Браузер, регистрация не нужна.</p></details>
+      <details><summary>Расширение куда-то отправляет мои данные?</summary><p>Нет. Всё хранится только в вашем браузере. Расширение ничего не меняет на площадках и не передаёт данные третьим лицам.</p></details>
+      <details><summary>Площадка не заблокирует меня?</summary><p>Carta только читает страницы, которые вы и так открываете, и запрашивает отзывы и вопросы так же, как сама страница, с паузами между запросами. В вашем кабинете и карточках она ничего не меняет.</p></details>
+      <details><summary>Какая нейросеть нужна?</summary><p>Подойдёт бесплатная Алиса — с нашими промптами она показала лучший результат среди бесплатных. Если у вас есть доступ к Claude или ChatGPT, ещё лучше.</p></details>
+      <details><summary>Работает ли на Яндекс Маркете?</summary><p>Пока нет — сейчас расширение поддерживает Ozon и Wildberries. Методика и промпты подходят для любой площадки.</p></details>
+      <details><summary>Можно ли вернуть деньги?</summary><p>Да, если в течение 7 дней вы не смогли установить или запустить расширение по инструкции, а мы не смогли помочь, — вернём полную стоимость. Напишите на carta.seller@yandex.ru.</p></details>
+      <details><summary>Вы гарантируете выход в топ?</summary><p>Нет, и никто честный не гарантирует. На позиции влияют товар, цена, отзывы и спрос. Carta делает сильной саму карточку.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><div class="logo">Carta</div><div>Волков Артём Алексеевич, самозанятый (налог на профессиональный доход), ИНН 760311939432</div><div><a href="mailto:carta.seller@yandex.ru">carta.seller@yandex.ru</a></div></div>
+    <nav aria-label="Документы и ссылки"><a href="https://vk.ru/carta.seller" target="_blank" rel="noopener">Carta во ВКонтакте</a><a href="oferta.html">Оферта</a><a href="privacy.html">Политика конфиденциальности</a></nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  let s=55;const sc=document.getElementById("sc"),vd=document.getElementById("vd");
+  const set=(to)=>{const from=s;s=to;const t0=performance.now();
+    const st=(t)=>{const k=Math.min(1,(t-t0)/500);sc.textContent=Math.round(from+(to-from)*k);if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st);
+    vd.className="verdict "+(to>=80?"good":to>=50?"mid":"bad");vd.textContent=to>=80?"Карточка в хорошей форме":to>=50?"Есть что улучшить":"Карточка теряет продажи";};
+  document.querySelectorAll("#demo .issue button").forEach(b=>b.addEventListener("click",()=>{const it=b.closest(".issue");if(it.classList.contains("fixed"))return;it.classList.add("fixed");b.textContent="Готово";set(Math.min(100,s+(+it.dataset.p)));}));
+})();
+</script>
+</body>
+</html>
