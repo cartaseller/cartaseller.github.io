@@ -223,6 +223,46 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
 @keyframes pop{0%{transform:scale(.4)}100%{transform:scale(1)}}
 .prog{position:fixed;left:0;top:0;height:3px;width:0;background:#C4A26E;z-index:999}
 @media (prefers-reduced-motion: reduce){.js .rv,.js .hero *,.js #demo,.js #demo *{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}.btn-light::after{display:none}}
+
+/* ---- v2: живой фон и интерактив ---- */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero>.wrap{position:relative;z-index:2}
+.aurora{position:absolute;inset:-20%;z-index:0;pointer-events:none;filter:blur(90px);opacity:.55}
+.aurora i{position:absolute;border-radius:50%;mix-blend-mode:screen}
+.aurora i:nth-child(1){width:46vw;height:46vw;left:48%;top:4%;background:radial-gradient(circle,#A8844F 0%,transparent 65%);animation:a1 22s ease-in-out infinite alternate}
+.aurora i:nth-child(2){width:38vw;height:38vw;left:8%;top:42%;background:radial-gradient(circle,#6E4F2A 0%,transparent 65%);animation:a2 26s ease-in-out infinite alternate}
+.aurora i:nth-child(3){width:30vw;height:30vw;left:62%;top:52%;background:radial-gradient(circle,#C4A26E 0%,transparent 62%);opacity:.7;animation:a3 18s ease-in-out infinite alternate}
+@keyframes a1{to{transform:translate(-18vw,14vh) scale(1.15)}}
+@keyframes a2{to{transform:translate(22vw,-16vh) scale(.9)}}
+@keyframes a3{to{transform:translate(-12vw,-22vh) scale(1.25)}}
+.grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.spot{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(600px circle at var(--mx,70%) var(--my,30%),rgba(196,162,110,.13),transparent 60%);transition:opacity .4s}
+.hero h1 .acc{color:#C4A26E}
+.tiltwrap{perspective:1200px}
+.tiltwrap>#demo{will-change:transform}
+.tilt{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out;transform-style:preserve-3d}
+/* бегущая строка */
+.marquee{background:#141413;color:#C4A26E;overflow:hidden;border-top:1px solid #2c2a27;border-bottom:1px solid #2c2a27;padding:18px 0;position:relative}
+.marquee .track{display:flex;width:max-content;animation:mq 38s linear infinite}
+.marquee span{font-family:var(--serif);font-size:26px;letter-spacing:.04em;white-space:nowrap;padding:0 28px;display:flex;align-items:center;gap:56px}
+.marquee span b{font-weight:400;color:#F6F3EE}
+.marquee span i{width:6px;height:6px;border-radius:50%;background:#A8844F;display:inline-block}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* стеклянная шапка */
+.glass{position:fixed;left:50%;top:14px;transform:translate(-50%,-140%);z-index:998;display:flex;align-items:center;gap:28px;padding:10px 12px 10px 24px;border-radius:999px;background:rgba(30,30,30,.62);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(246,243,238,.12);color:#F6F3EE;transition:transform .5s cubic-bezier(.2,.7,.2,1);box-shadow:0 14px 40px -20px rgba(0,0,0,.6)}
+.glass.on{transform:translate(-50%,0)}
+.glass .logo{font-size:24px}
+.glass nav{display:flex;gap:22px;font-size:14px}
+.glass nav a{color:#CFC8BD;text-decoration:none}.glass nav a:hover{color:#fff}
+.glass .btn{padding:10px 20px;font-size:14px;border-radius:999px}
+@media (max-width:760px){.glass nav{display:none}.glass{gap:16px;width:max-content}}
+/* линия шагов */
+.flow{position:relative;border-top-color:transparent!important}
+.flow::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:linear-gradient(90deg,#A8844F,#C4A26E);transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.flow.drawn::before{transform:scaleX(1)}
+.js:not(.jsready) .flow::before{transform:scaleX(1)}
+@media (prefers-reduced-motion: reduce){.aurora i,.marquee .track{animation:none!important}.tilt{transform:none!important}}
 </style>
 </head>
 <body>
@@ -261,6 +301,8 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
     </div>
   </div>
 </header>
+<div class="marquee" aria-hidden="true"><div class="track"><span><b>Аудит карточки</b><i></i>Негативные отзывы в Excel<i></i><b>Вопросы покупателей</b><i></i>Промпты без выдумок<i></i><b>Ozon и Wildberries</b><i></i>Юнит-экономика в подарок<i></i></span><span><b>Аудит карточки</b><i></i>Негативные отзывы в Excel<i></i><b>Вопросы покупателей</b><i></i>Промпты без выдумок<i></i><b>Ozon и Wildberries</b><i></i>Юнит-экономика в подарок<i></i></span></div></div>
+
 
 <main>
 <section>
@@ -468,6 +510,31 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
   if(am&&"IntersectionObserver" in window&&!R){var done=false;new IntersectionObserver(function(en,o){en.forEach(function(x){if(x.isIntersecting&&!done){done=true;o.disconnect();var t0=performance.now();(function st(t){var p=Math.min(1,(t-t0)/1100),v=Math.round(990*(1-Math.pow(1-p,3)));am.textContent=v+" ₽";if(p<1)requestAnimationFrame(st)})(t0)}})},{threshold:.6}).observe(am)}
   var bar=document.createElement("div");bar.className="prog";document.body.appendChild(bar);
   addEventListener("scroll",function(){var h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%"},{passive:true});
+})();
+</script>
+
+<script>
+(function(){
+  document.documentElement.classList.add("jsready");
+  var R=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine=window.matchMedia&&matchMedia("(pointer:fine)").matches;
+  var hero=document.querySelector(".hero");
+  if(hero){var a=document.createElement("div");a.className="aurora";a.innerHTML="<i></i><i></i><i></i>";var g=document.createElement("div");g.className="grain";var s=document.createElement("div");s.className="spot";hero.prepend(s);hero.prepend(g);hero.prepend(a);
+    hero.addEventListener("pointermove",function(e){var r=hero.getBoundingClientRect();hero.style.setProperty("--mx",(e.clientX-r.left)+"px");hero.style.setProperty("--my",(e.clientY-r.top)+"px")});}
+  // акцент в заголовке: последние два слова
+  setTimeout(function(){var ws=document.querySelectorAll(".hero h1 .w");if(ws.length>2){ws[ws.length-2].classList.add("acc");ws[ws.length-1].classList.add("acc")}},0);
+  // 3D-наклон панели
+  var demo=document.getElementById("demo");
+  if(demo&&fine&&!R){var w=demo.parentElement;w.classList.add("tiltwrap");w.classList.add("tilt");
+    hero.addEventListener("pointermove",function(e){var r=w.getBoundingClientRect();var x=(e.clientX-(r.left+r.width/2))/r.width,y=(e.clientY-(r.top+r.height/2))/r.height;w.style.setProperty("--ry",(x*10).toFixed(2)+"deg");w.style.setProperty("--rx",(-y*8).toFixed(2)+"deg")});
+    hero.addEventListener("pointerleave",function(){w.style.setProperty("--ry","0deg");w.style.setProperty("--rx","0deg")});}
+  // магнитная кнопка
+  if(fine&&!R)document.querySelectorAll(".hero .btn-light").forEach(function(b){b.addEventListener("pointermove",function(e){var r=b.getBoundingClientRect();b.style.transform="translate("+((e.clientX-r.left-r.width/2)*.25)+"px,"+((e.clientY-r.top-r.height/2)*.35)+"px)"});b.addEventListener("pointerleave",function(){b.style.transform=""})});
+  // стеклянная шапка
+  var gl=document.createElement("div");gl.className="glass";gl.innerHTML='<span class="logo">Carta</span><nav><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#price">Стоимость</a><a href="#faq">Вопросы</a></nav><a class="btn btn-light" href="#price">Получить Carta</a>';document.body.appendChild(gl);
+  var onS=function(){gl.classList.toggle("on",scrollY>(hero?hero.offsetHeight-80:500))};addEventListener("scroll",onS,{passive:true});onS();
+  // линия шагов
+  var fl=document.querySelector(".flow");if(fl){if("IntersectionObserver" in window&&!R){new IntersectionObserver(function(en,o){en.forEach(function(x){if(x.isIntersecting){fl.classList.add("drawn");o.disconnect()}})},{threshold:.3}).observe(fl)}else fl.classList.add("drawn")}
 })();
 </script>
 </body>
