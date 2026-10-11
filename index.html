@@ -5,6 +5,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Carta — система сильной карточки для Ozon и Wildberries</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1E1E1E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cartaseller.github.io/">
+<meta property="og:site_name" content="Carta">
+<meta property="og:title" content="Carta — система сильной карточки для Ozon и Wildberries">
+<meta property="og:description" content="Аудит карточки, все негативные отзывы и вопросы покупателей в Excel и промпты для описания без выдумок. 990 ₽.">
+<meta property="og:image" content="https://cartaseller.github.io/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cartaseller.github.io/og.png">
 <meta name="description" content="Расширение для Ozon и Wildberries: аудит карточки, все негативные отзывы и вопросы покупателей в Excel и промпты для описания без выдумок. Плюс руководство и таблица юнит-экономики.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -263,6 +276,30 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
 .flow.drawn::before{transform:scaleX(1)}
 .js:not(.jsready) .flow::before{transform:scaleX(1)}
 @media (prefers-reduced-motion: reduce){.aurora i,.marquee .track{animation:none!important}.tilt{transform:none!important}}
+
+/* ---- v3 ---- */
+.vid{margin-top:56px;border-radius:14px;overflow:hidden;background:#1E1E1E;box-shadow:0 40px 80px -40px rgba(30,30,30,.55);position:relative;aspect-ratio:16/9}
+.vid video{display:block;width:100%;height:100%;object-fit:cover}
+.vid .lbl{position:absolute;left:18px;top:16px;background:rgba(30,30,30,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F6F3EE;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;display:flex;gap:8px;align-items:center}
+.vid .lbl i{width:8px;height:8px;border-radius:50%;background:#C4A26E;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+/* до/после */
+.ba mark.bad{background:linear-gradient(transparent 62%,rgba(155,59,46,.22) 62%) no-repeat 0 0/0% 100%;color:inherit;transition:background-size .7s ease;transition-delay:calc(.3s + var(--i)*.3s)}
+.ba.seen mark.bad{background-size:100% 100%}
+.ba .after{transition:box-shadow .8s ease 1.4s}
+.ba.seen .after{box-shadow:0 0 0 4px rgba(196,162,110,.18),0 24px 50px -30px rgba(122,94,51,.6)}
+.typing::after{content:"▍";color:var(--gold);animation:blink 1s step-end infinite}
+/* мобильная плашка */
+.mbar{display:none}
+@media (max-width:760px){
+ .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:997;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 20px;border-radius:16px;background:rgba(30,30,30,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#F6F3EE;box-shadow:0 18px 40px -18px rgba(0,0,0,.7);transform:translateY(160%);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+ .mbar.on{transform:none}
+ .mbar .pr{font-family:var(--serif);font-size:28px;line-height:1;white-space:nowrap}
+ .mbar .btn{padding:12px 20px;font-size:15px;border-radius:12px}
+ .glass{display:none}
+}
+/* плавные вопросы */
+.faq details{overflow:hidden}
 </style>
 </head>
 <body>
@@ -367,6 +404,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
       <div><span>3</span><b>Скопируйте промпт</b><p>Данные товара, жалобы и вопросы уже подставлены.</p></div>
       <div><span>4</span><b>Получите описание</b><p>Нейросеть подберёт ключи, проверит себя и выдаст текст, готовый к публикации.</p></div>
     </div>
+    <div class="vid rv"><span class="lbl"><i></i>Carta в деле · 1 минута</span><video src="carta-demo.mp4" poster="carta-demo.jpg" muted loop playsinline preload="none" aria-label="Видео: как работает Carta"></video></div>
   </div>
 </section>
 
@@ -535,6 +573,34 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
   var onS=function(){gl.classList.toggle("on",scrollY>(hero?hero.offsetHeight-80:500))};addEventListener("scroll",onS,{passive:true});onS();
   // линия шагов
   var fl=document.querySelector(".flow");if(fl){if("IntersectionObserver" in window&&!R){new IntersectionObserver(function(en,o){en.forEach(function(x){if(x.isIntersecting){fl.classList.add("drawn");o.disconnect()}})},{threshold:.3}).observe(fl)}else fl.classList.add("drawn")}
+})();
+</script>
+
+<script>
+(function(){
+  var R=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // видео: играет, только когда видно
+  var v=document.querySelector(".vid video");
+  if(v&&"IntersectionObserver" in window){new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){v.preload="auto";var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})},{threshold:.35}).observe(v)}
+  // до/после: подсветка ошибок и печать текста
+  var ba=document.querySelector(".ba");
+  if(ba){
+    var bp=ba.querySelector(".before p");
+    if(bp){["премиум-класса","незаменимая вещь в любом гардеробе","тепло и комфорт в любую погоду","непременно понравится детям"].forEach(function(w,i){bp.innerHTML=bp.innerHTML.replace(w,'<mark class="bad" style="--i:'+i+'">'+w+'</mark>')})}
+    var ps=ba.querySelectorAll(".after p"),txt=[].map.call(ps,function(p){return p.textContent});
+    if(!R&&"IntersectionObserver" in window){ps.forEach(function(p){p.style.minHeight="1.6em";p.textContent=""});
+      new IntersectionObserver(function(en,o){en.forEach(function(x){if(x.isIntersecting){o.disconnect();ba.classList.add("seen");var i=0;
+        setTimeout(function next(){if(i>=ps.length){ps[ps.length-1].classList.remove("typing");return}var p=ps[i],s=txt[i],n=0;ps.forEach(function(q){q.classList.remove("typing")});p.classList.add("typing");
+          (function ty(){n+=2;p.textContent=s.slice(0,n);if(n<s.length)setTimeout(ty,18);else{i++;setTimeout(next,300)}})()},1600)}})},{threshold:.35}).observe(ba)}
+    else ba.classList.add("seen");
+  }
+  // мобильная плашка
+  var price=document.getElementById("price"),hero=document.querySelector(".hero");
+  var mb=document.createElement("div");mb.className="mbar";mb.innerHTML='<span class="pr">990 ₽</span><a class="btn btn-light" href="#price">Получить Carta</a>';document.body.appendChild(mb);
+  var inPrice=false;if(price&&"IntersectionObserver" in window)new IntersectionObserver(function(en){en.forEach(function(x){inPrice=x.isIntersecting;upd()})},{threshold:.15}).observe(price);
+  function upd(){mb.classList.toggle("on",scrollY>(hero?hero.offsetHeight*.7:400)&&!inPrice)}addEventListener("scroll",upd,{passive:true});upd();
+  // плавные вопросы
+  if(!R&&Element.prototype.animate)document.querySelectorAll(".faq details").forEach(function(d){var s=d.querySelector("summary");s.addEventListener("click",function(e){e.preventDefault();var h0=d.offsetHeight;if(d.open){var h1=s.offsetHeight;var a=d.animate({height:[h0+"px",h1+"px"]},{duration:300,easing:"ease"});a.onfinish=function(){d.open=false}}else{d.open=true;var h2=d.offsetHeight;d.animate({height:[h0+"px",h2+"px"]},{duration:320,easing:"ease"})}})});
 })();
 </script>
 </body>
