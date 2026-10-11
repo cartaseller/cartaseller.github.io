@@ -404,7 +404,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
       <div><span>3</span><b>Скопируйте промпт</b><p>Данные товара, жалобы и вопросы уже подставлены.</p></div>
       <div><span>4</span><b>Получите описание</b><p>Нейросеть подберёт ключи, проверит себя и выдаст текст, готовый к публикации.</p></div>
     </div>
-    <div class="vid rv"><span class="lbl"><i></i>Carta в деле · 1 минута</span><video src="carta-demo.mp4" poster="carta-demo.jpg" muted loop playsinline preload="none" aria-label="Видео: как работает Carta"></video></div>
+    <div class="vid rv"><span class="lbl"><i></i>Carta в деле · 1 минута</span><video poster="carta-demo.jpg" muted autoplay loop playsinline preload="metadata" aria-label="Видео: как работает Carta"><source src="carta-demo.mp4" type="video/mp4"><source src="carta-demo.webm" type="video/webm"></video></div>
   </div>
 </section>
 
@@ -580,8 +580,8 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
 (function(){
   var R=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
   // видео: играет, только когда видно
-  var v=document.querySelector(".vid video");
-  if(v&&"IntersectionObserver" in window){new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){v.preload="auto";var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})},{threshold:.35}).observe(v)}
+  var v=document.querySelector(".vid video");if(v){v.muted=true;v.addEventListener("error",function(){v.controls=true},true)}
+  if(v&&"IntersectionObserver" in window){new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){v.controls=true})}else v.pause()})},{threshold:.35}).observe(v)}
   // до/после: подсветка ошибок и печать текста
   var ba=document.querySelector(".ba");
   if(ba){
