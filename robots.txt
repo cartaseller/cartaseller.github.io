@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /thanks.html
+Disallow: /fail.html
+Allow: /
+
+Sitemap: https://cartaseller.github.io/sitemap.xml
