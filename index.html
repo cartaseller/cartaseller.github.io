@@ -278,6 +278,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
 @media (prefers-reduced-motion: reduce){.aurora i,.marquee .track{animation:none!important}.tilt{transform:none!important}}
 
 /* ---- v3 ---- */
+.btn-free{color:#F6F3EE;font-weight:600;font-size:15px;text-decoration:none;border-bottom:1px solid rgba(196,162,110,.6);padding-bottom:2px;transition:color .2s,border-color .2s}.btn-free:hover{color:#C4A26E;border-color:#C4A26E}
 .vid .snd{position:absolute;right:16px;bottom:16px;z-index:2;background:rgba(30,30,30,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F6F3EE;border:1px solid rgba(246,243,238,.18);font:600 13px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .25s}
 .vid .snd:hover{background:rgba(30,30,30,.9)}
 .vid{margin-top:56px;border-radius:14px;overflow:hidden;background:#1E1E1E;box-shadow:0 40px 80px -40px rgba(30,30,30,.55);position:relative;aspect-ratio:16/9}
@@ -316,7 +317,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
         <div class="rule"></div>
         <h1>Ваш товар хороший. Проблема в карточке.</h1>
         <p class="lead">Расширение для Ozon и Wildberries находит ошибки в карточке, собирает все жалобы и вопросы покупателей и готовит задание для нейросети. На выходе — описание без воды и выдумок, которое отвечает на то, что действительно волнует покупателя.</p>
-        <div class="cta-row"><a class="btn btn-light" href="#price">Получить Carta</a><span>Расширение, руководство и таблица юнит-экономики</span></div>
+        <div class="cta-row"><a class="btn btn-light" href="#price">Получить Carta</a><a class="btn-free" href="check.html">Проверить название бесплатно →</a><span>Расширение, руководство и таблица юнит-экономики</span></div>
       </div>
       <div style="display:grid">
         <div class="panel" id="demo" aria-label="Пример панели Carta на карточке товара">
@@ -570,7 +571,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
   // магнитная кнопка
   if(fine&&!R)document.querySelectorAll(".hero .btn-light").forEach(function(b){b.addEventListener("pointermove",function(e){var r=b.getBoundingClientRect();b.style.transform="translate("+((e.clientX-r.left-r.width/2)*.25)+"px,"+((e.clientY-r.top-r.height/2)*.35)+"px)"});b.addEventListener("pointerleave",function(){b.style.transform=""})});
   // стеклянная шапка
-  var gl=document.createElement("div");gl.className="glass";gl.innerHTML='<span class="logo">Carta</span><nav><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#price">Стоимость</a><a href="#faq">Вопросы</a></nav><a class="btn btn-light" href="#price">Получить Carta</a>';document.body.appendChild(gl);
+  var gl=document.createElement("div");gl.className="glass";gl.innerHTML='<span class="logo">Carta</span><nav><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#price">Стоимость</a><a href="#faq">Вопросы</a><a href="check.html">Проверка названия</a></nav><a class="btn btn-light" href="#price">Получить Carta</a>';document.body.appendChild(gl);
   var onS=function(){gl.classList.toggle("on",scrollY>(hero?hero.offsetHeight-80:500))};addEventListener("scroll",onS,{passive:true});onS();
   // линия шагов
   var fl=document.querySelector(".flow");if(fl){if("IntersectionObserver" in window&&!R){new IntersectionObserver(function(en,o){en.forEach(function(x){if(x.isIntersecting){fl.classList.add("drawn");o.disconnect()}})},{threshold:.3}).observe(fl)}else fl.classList.add("drawn")}

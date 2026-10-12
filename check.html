@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Бесплатная проверка названия карточки Ozon и Wildberries — Carta</title>
+<meta name="description" content="Вставьте название товара и за секунду узнайте, что мешает ему продавать: капслок, повторы, длина, другие площадки, контакты, латиница и рекламные слова. Бесплатно, без регистрации.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1E1E1E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cartaseller.github.io/check.html">
+<meta property="og:site_name" content="Carta">
+<meta property="og:title" content="Проверьте название карточки бесплатно — Carta">
+<meta property="og:description" content="Капслок, повторы, длина, другие площадки и рекламные слова — разбор названия для Ozon и WB за секунду.">
+<meta property="og:image" content="https://cartaseller.github.io/og-check.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F3EE;--bg-2:#EFEAE2;--card:#FFFDF9;--text:#1E1E1E;--muted:#5E5852;--line:#D9D1C4;
+  --night:#1E1E1E;--gold:#A8844F;--gold-d:#7A5E33;--gold-l:#C4A26E;--red:#9B3B2E;--green:#3F6B4A;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:Manrope,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#191817;--bg-2:#211F1D;--card:#24221F;--text:#F2EEE7;--muted:#BDB5A8;--line:#3A3632;--gold-d:#C4A26E;--red:#D07A6B;--green:#7FB08A}}
+:root[data-theme="dark"]{--bg:#191817;--bg-2:#211F1D;--card:#24221F;--text:#F2EEE7;--muted:#BDB5A8;--line:#3A3632;--gold-d:#C4A26E;--red:#D07A6B;--green:#7FB08A}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--gold-d)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.hero{background:#1E1E1E;color:#F6F3EE;padding:28px 0 72px;position:relative;overflow:hidden}
+header.hero::before{content:"";position:absolute;width:700px;height:700px;right:-220px;top:-320px;background:radial-gradient(circle,rgba(196,162,110,.4),transparent 62%);pointer-events:none}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:56px;position:relative}
+.logo{font-family:var(--serif);font-size:30px;letter-spacing:.04em;color:#F6F3EE;text-decoration:none}
+.top a.back{color:#CFC8BD;font-size:14px;text-decoration:none}.top a.back:hover{color:#fff}
+.tag{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.2em;color:#C4A26E;margin-bottom:18px}
+.tag i{width:8px;height:8px;border-radius:50%;background:#C4A26E}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,68px);line-height:1.02;margin:0 0 18px;position:relative}
+h1 span{color:#C4A26E}
+.lead{color:#CFC8BD;font-size:18px;max-width:600px;margin:0;position:relative}
+main{margin-top:-40px;position:relative}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;box-shadow:0 30px 60px -40px rgba(30,30,30,.45)}
+.seg{display:inline-flex;border:1px solid var(--text);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.seg button{background:transparent;border:0;color:var(--text);font:600 14px var(--sans);padding:9px 20px;cursor:pointer}
+.seg button.on{background:var(--text);color:var(--bg)}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:0 0 6px}
+textarea,input{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:16px/1.5 var(--sans);resize:vertical}
+textarea{min-height:96px}
+.row2{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+.hint{font-size:13px;color:var(--muted);margin-top:6px}
+.btn{display:inline-block;background:var(--text);color:var(--bg);border:0;border-radius:10px;padding:15px 28px;font:600 16px var(--sans);cursor:pointer;text-decoration:none;margin-top:18px;transition:transform .2s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.gold{background:#C4A26E;color:#1E1E1E}
+.res{display:none;margin-top:28px}.res.on{display:block;animation:up .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.score{display:flex;align-items:center;gap:22px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+.num{font-family:var(--serif);font-size:84px;line-height:.9;font-weight:300}.num small{font-size:24px;color:var(--muted)}
+.vd{font-weight:700;font-size:18px}.vd.good{color:var(--green)}.vd.mid{color:var(--gold-d)}.vd.bad{color:var(--red)}
+.meter{margin:4px 0 22px}
+.meter .bar{height:8px;border-radius:4px;background:var(--bg-2);position:relative;overflow:hidden}
+.meter .zone{position:absolute;top:0;bottom:0;background:rgba(63,107,74,.22)}
+.meter .fill{position:absolute;left:0;top:0;bottom:0;background:var(--gold);border-radius:4px;transition:width .6s ease}
+.meter .lbl{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:6px}
+h3{font-family:var(--sans);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+ul{list-style:none;margin:0;padding:0}
+li{border-left:3px solid var(--line);padding:8px 0 8px 14px;margin-bottom:8px}
+li.error{border-left-color:var(--red)}li.warn{border-left-color:var(--gold)}li.ok{border-left-color:var(--green);color:var(--muted)}
+li b{display:block;font-size:15px;margin-bottom:2px;color:var(--text)}
+mark{background:rgba(155,59,46,.16);color:inherit;border-radius:3px;padding:0 2px}
+.preview{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:14px 16px;font-size:16px;line-height:1.6;margin-bottom:6px;word-break:break-word}
+.cta{margin-top:28px;background:#1E1E1E;color:#F6F3EE;border-radius:14px;padding:28px;position:relative;overflow:hidden}
+.cta::after{content:"";position:absolute;width:420px;height:420px;right:-160px;bottom:-220px;background:radial-gradient(circle,rgba(196,162,110,.35),transparent 62%)}
+.cta h2{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.1;margin:0 0 10px;position:relative}
+.cta p{color:#CFC8BD;margin:0 0 6px;position:relative;max-width:560px}
+.cta ul{position:relative;margin:14px 0 4px}.cta li{border-left-color:#C4A26E;color:#E8E2D8}
+.cta .btn{position:relative}
+.share{margin-top:14px;font-size:14px;color:var(--muted)}
+.share button{background:none;border:0;color:var(--gold-d);font:600 14px var(--sans);cursor:pointer;padding:0;text-decoration:underline}
+section.info{padding:56px 0 30px}
+section.info h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,40px);margin:0 0 14px}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.rules div{border-top:1px solid var(--line);padding-top:12px}
+.rules b{display:block;font-size:16px;margin-bottom:4px}.rules p{margin:0;color:var(--muted);font-size:15px}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:14px;margin-top:30px}
+@media (max-width:640px){.rules{grid-template-columns:1fr}.box{padding:20px}.num{font-size:68px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="top"><a class="logo" href="index.html">Carta</a><a class="back" href="index.html">О Carta →</a></div>
+  <div class="tag"><i></i>БЕСПЛАТНО · БЕЗ РЕГИСТРАЦИИ</div>
+  <h1>Проверьте название<br><span>своей карточки</span></h1>
+  <p class="lead">Вставьте название товара с Ozon или Wildberries — за секунду покажем, что в нём мешает продажам и рискует нарушить правила площадки.</p>
+</div></header>
+
+<main><div class="wrap">
+  <div class="box">
+    <div class="seg" role="radiogroup" aria-label="Площадка"><button type="button" class="on" data-p="ozon" role="radio" aria-checked="true">Ozon</button><button type="button" data-p="wb" role="radio" aria-checked="false">Wildberries</button></div>
+    <label for="title">Название товара</label>
+    <textarea id="title" placeholder="Например: Костюм утеплённый для девочки КОМБИНЕЗОН зимний, куртка и полукомбинезон"></textarea>
+    <div class="row2"><div><label for="brand">Ваш бренд (необязательно)</label><input id="brand" placeholder="Чтобы не считать бренд «латиницей»"></div></div>
+    <button class="btn" id="go" type="button">Проверить название</button>
+
+    <div class="res" id="res" aria-live="polite">
+      <div class="score"><div class="num" id="num">0<small>/100</small></div><div><div class="vd" id="vd"></div><div class="hint" id="cnt"></div></div></div>
+      <div class="preview" id="prev"></div>
+      <div class="meter"><div class="bar"><div class="zone" id="zone"></div><div class="fill" id="fill"></div></div><div class="lbl"><span>0</span><span>Длина названия</span><span id="max">200</span></div></div>
+      <h3>Что исправить</h3><ul id="bad"></ul>
+      <h3>Что уже хорошо</h3><ul id="good"></ul>
+      <div class="share">Проверяете карточки команды? <button type="button" id="sh">Скопировать ссылку на проверку</button></div>
+
+      <div class="cta">
+        <h2>Название — это только начало</h2>
+        <p>Carta проверяет всю карточку прямо на Ozon и Wildberries и делает то, чего не сделать вручную за вечер:</p>
+        <ul>
+          <li>оценка всей карточки: описание, характеристики, фото и видео</li>
+          <li>все негативные отзывы и вопросы покупателей — в одном Excel</li>
+          <li>готовый промпт: нейросеть напишет ключи и описание без выдумок</li>
+        </ul>
+        <a class="btn gold" href="index.html#price">Carta за 990 ₽ — посмотреть</a>
+      </div>
+    </div>
+  </div>
+</div></main>
+
+<section class="info"><div class="wrap">
+  <h2>Что проверяем</h2>
+  <div class="rules">
+    <div><b>Капслок</b><p>Слова заглавными буквами выглядят как крик и снижают доверие.</p></div>
+    <div><b>Повторы</b><p>Одно и то же слово дважды похоже на спам ключами.</p></div>
+    <div><b>Длина</b><p>Слишком короткое не объясняет товар, слишком длинное превращается в список ключей.</p></div>
+    <div><b>Другие площадки</b><p>Упоминание конкурентов в карточке нарушает правила маркетплейса.</p></div>
+    <div><b>Ссылки и контакты</b><p>Телефоны, мессенджеры и сайты в карточке запрещены.</p></div>
+    <div><b>Рекламные слова</b><p>«Лучший», «хит», «скидка» не продают, а площадка может ограничить такую карточку.</p></div>
+    <div><b>Латиница</b><p>Допустима для бренда и сленга, остальное лучше перевести.</p></div>
+    <div><b>Восклицания</b><p>Восклицательные знаки в названии выглядят дёшево.</p></div>
+  </div>
+  <p class="hint" style="margin-top:22px">Проверка работает прямо в вашем браузере — название никуда не отправляется.</p>
+</div></section>
+
+<footer><div class="wrap">Carta — система сильной карточки для Ozon и Wildberries · <a href="index.html">cartaseller.github.io</a> · <a href="https://vk.ru/carta.seller" target="_blank" rel="noopener">Carta во ВКонтакте</a></div></footer>
+
+<script>
+(function(){
+  var M={ozon:"wildberries|вайлдберриз|валдберис|вайлдбериз|\\bwb\\b|(?<![а-яё])вб(?![а-яё])|яндекс\\s*маркет|yandex\\s*market",wb:"ozon|(?<![а-яё])озон(?![а-яё])|яндекс\\s*маркет|yandex\\s*market"};
+  var COMMON="мегамаркет|megamarket|сбермегамаркет|авито|avito|aliexpress|алиэкспресс|lamoda|ламода";
+  var CONTACTS=/(https?:\/\/|www\.|t\.me\/|@[a-z0-9_]{4,}|телеграм|telegram|whatsapp|ватсап|вотсап|(\+7|8)[\s\-(]*\d{3}[\s\-)]*\d{3}[\s\-]*\d{2}[\s\-]*\d{2})/i;
+  var CLAIMS=/(лучш(ий|ая|ее|ие)|№\s?1\b|номер\s+один|хит\s+продаж|топ\s+продаж|скидк|акци[яи]|распродаж)/i;
+  var SIZE=/^(x{0,3}s|m|x{0,3}l|\d?xl|xxl|xxxl|xs|oversize)$/i;
+  var plural=function(n,a,b,c){var x=Math.abs(n)%100,y=x%10;if(x>10&&x<20)return c;if(y>1&&y<5)return b;if(y===1)return a;return c};
+  var zn=function(n){return n+" "+plural(n,"знак","знака","знаков")};
+  var words=function(t){return String(t||"").match(/[A-Za-zА-Яа-яЁё]+/g)||[]};
+  function latin(text,brand){var bt=new Set(words(brand).map(function(w){return w.toLowerCase()})),f=new Set();
+    String(text||"").split(/[\s,.;:!?()«»"\/]+/).forEach(function(raw){if(!raw||/\d/.test(raw))return;var w=raw.replace(/[^A-Za-z\-]/g,"").replace(/^-+|-+$/g,"");
+      if(w.length<2||!/^[A-Za-z\-]+$/.test(raw.replace(/[^A-Za-zА-Яа-яЁё\-]/g,"")))return;if(bt.has(w.toLowerCase())||SIZE.test(w))return;f.add(w)});return Array.from(f)}
+  function repeats(t){var m=new Map();words(t).forEach(function(w){if(w.length<4)return;var s=w.toLowerCase().slice(0,5);m.set(s,(m.get(s)||[]).concat(w.toLowerCase()))});
+    return Array.from(m.values()).filter(function(v){return v.length>1}).map(function(v){return v[0]})}
+  var caps=function(t){return String(t||"").match(/(?<![А-Яа-яЁё])[А-ЯЁ]{4,}(?![А-Яа-яЁё])/gu)||[]};
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+  var platform="ozon";
+  document.querySelectorAll(".seg button").forEach(function(b){b.addEventListener("click",function(){platform=b.dataset.p;document.querySelectorAll(".seg button").forEach(function(x){var on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-checked",String(on))});if(document.getElementById("res").classList.contains("on"))check()})});
+  function check(){
+    var t=document.getElementById("title").value.replace(/\s+/g," ").trim(),brand=document.getElementById("brand").value.trim();
+    if(!t){document.getElementById("title").focus();return}
+    var bad=[],good=[],marks=[];
+    var L=t.length;
+    if(L>120)bad.push(["warn","Название длинное ("+zn(L)+")","Похоже на список ключей. Оставьте главное: что это, для кого и чем отличается. Остальные ключи — в характеристики и описание."]);
+    else if(L<25)bad.push(["warn","Название короткое ("+zn(L)+")","Добавьте, для кого товар и его главное преимущество — так карточку найдут по большему числу запросов."]);
+    else good.push("Длина в норме: "+zn(L));
+    var r=repeats(t);if(r.length){bad.push(["warn","Повторяются слова: "+r.join(", "),"Повторы выглядят как спам ключами и не добавляют показов. Оставьте одно упоминание."]);r.forEach(function(w){marks.push(new RegExp("(?<![А-Яа-яЁёA-Za-z])"+w.slice(0,5)+"[А-Яа-яЁёA-Za-z]*","gi"))})}else good.push("Без повторов слов");
+    var c=caps(t);if(c.length){bad.push(["warn","Слова заглавными буквами: "+c.join(", "),"Капслок воспринимается как крик и снижает доверие. Пишите обычными буквами — бренд можно оставить как есть."]);c.forEach(function(w){marks.push(new RegExp(w,"g"))})}else good.push("Без капслока");
+    var cl=t.match(CLAIMS);if(cl){bad.push(["warn","Рекламное слово: «"+cl[0]+"»","«Лучший», «хит», «скидка» покупатели пропускают, а площадка может ограничить такую карточку."]);marks.push(new RegExp(cl[0],"gi"))}else good.push("Без рекламных обещаний");
+    var mk=t.match(new RegExp("("+M[platform]+"|"+COMMON+")","i"));if(mk){bad.push(["error","Упоминается другая площадка: «"+mk[0]+"»","Это нарушает правила "+(platform==="ozon"?"Ozon":"Wildberries")+". Уберите упоминание, иначе карточку могут скрыть."]);marks.push(new RegExp(mk[0].replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"))}else good.push("Нет упоминаний других площадок");
+    var ct=t.match(CONTACTS);if(ct){bad.push(["error","Похоже на ссылку или контакт: «"+ct[0]+"»","Внешние ссылки, телефоны и мессенджеры в карточке запрещены."]);marks.push(new RegExp(ct[0].replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"))}else good.push("Нет ссылок и контактов");
+    var la=latin(t,brand);if(la.length){bad.push(["warn","Слова латиницей: "+la.slice(0,6).join(", "),"Латиница допустима для бренда и сленга без русского аналога. Остальное переведите — по-русски ищут чаще."]);la.forEach(function(w){marks.push(new RegExp("\\b"+w+"\\b","g"))})}else good.push("Латиница только там, где нужна");
+    var ex=(t.match(/!/g)||[]).length;if(ex){bad.push(["warn","Восклицательные знаки ("+ex+")","В названии они выглядят дёшево. Уберите — спокойный тон продаёт лучше."]);marks.push(/!/g)}else good.push("Без восклицательных знаков");
+    var errors=bad.filter(function(b){return b[0]==="error"}).length,warns=bad.length-errors;
+    var score=Math.max(0,100-errors*25-warns*10);
+    var h=esc(t);marks.forEach(function(re){h=h.replace(re,function(m){return"<mark>"+m+"</mark>"})});
+    h=h.replace(/<mark>(<mark>)+/g,"<mark>").replace(/(<\/mark>)+/g,"</mark>");
+    document.getElementById("prev").innerHTML=h;
+    var num=document.getElementById("num"),t0=performance.now();(function st(n){var k=Math.min(1,(n-t0)/700);num.innerHTML=Math.round(score*(1-Math.pow(1-k,3)))+"<small>/100</small>";if(k<1)requestAnimationFrame(st)})(t0);
+    var vd=document.getElementById("vd");vd.className="vd "+(score>=80?"good":score>=50?"mid":"bad");vd.textContent=score>=80?"Название в хорошей форме":score>=50?"Есть что улучшить":"Название теряет продажи";
+    document.getElementById("cnt").textContent=zn(L)+" · "+(bad.length?("замечаний: "+bad.length):"замечаний нет");
+    var mx=200;document.getElementById("max").textContent=mx;document.getElementById("zone").style.left=(25/mx*100)+"%";document.getElementById("zone").style.width=((120-25)/mx*100)+"%";
+    document.getElementById("fill").style.width=Math.min(100,L/mx*100)+"%";
+    document.getElementById("bad").innerHTML=bad.length?bad.map(function(b){return'<li class="'+b[0]+'"><b>'+esc(b[1])+"</b>"+esc(b[2])+"</li>"}).join(""):'<li class="ok"><b>Явных ошибок нет</b>Дальше — ключевые слова, описание и фото. Это Carta проверяет на самой карточке.</li>';
+    document.getElementById("good").innerHTML=good.map(function(g){return'<li class="ok">'+esc(g)+"</li>"}).join("")||'<li class="ok">Пока нечем похвалиться — но всё исправимо</li>';
+    var res=document.getElementById("res");res.classList.add("on");setTimeout(function(){res.scrollIntoView({behavior:"smooth",block:"start"})},60);
+  }
+  document.getElementById("go").addEventListener("click",check);
+  document.getElementById("title").addEventListener("keydown",function(e){if(e.key==="Enter"&&(e.ctrlKey||e.metaKey))check()});
+  document.getElementById("sh").addEventListener("click",function(){var u="https://cartaseller.github.io/check.html";try{navigator.clipboard.writeText(u)}catch(_){}this.textContent="Ссылка скопирована ✓"});
+})();
+</script>
+</body>
+</html>
