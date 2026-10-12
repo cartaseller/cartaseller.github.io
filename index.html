@@ -310,7 +310,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
 <header class="night hero">
   <div class="wrap">
     <div class="top"><span class="logo">Carta</span>
-      <nav aria-label="Разделы"><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#example">Пример</a><a href="#price">Стоимость</a><a href="#faq">Вопросы</a></nav>
+      <nav aria-label="Разделы"><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#example">Пример</a><a href="#price">Стоимость</a><a href="blog.html">Статьи</a><a href="calc.html">Калькулятор</a></nav>
     </div>
     <div class="hero-grid">
       <div>
@@ -571,7 +571,7 @@ footer a{color:var(--night-muted)}footer a:hover{color:var(--night-text)}
   // магнитная кнопка
   if(fine&&!R)document.querySelectorAll(".hero .btn-light").forEach(function(b){b.addEventListener("pointermove",function(e){var r=b.getBoundingClientRect();b.style.transform="translate("+((e.clientX-r.left-r.width/2)*.25)+"px,"+((e.clientY-r.top-r.height/2)*.35)+"px)"});b.addEventListener("pointerleave",function(){b.style.transform=""})});
   // стеклянная шапка
-  var gl=document.createElement("div");gl.className="glass";gl.innerHTML='<span class="logo">Carta</span><nav><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#price">Стоимость</a><a href="#faq">Вопросы</a><a href="check.html">Проверка названия</a></nav><a class="btn btn-light" href="#price">Получить Carta</a>';document.body.appendChild(gl);
+  var gl=document.createElement("div");gl.className="glass";gl.innerHTML='<span class="logo">Carta</span><nav><a href="#inside">Что внутри</a><a href="#how">Как работает</a><a href="#price">Стоимость</a><a href="blog.html">Статьи</a><a href="check.html">Проверка названия</a></nav><a class="btn btn-light" href="#price">Получить Carta</a>';document.body.appendChild(gl);
   var onS=function(){gl.classList.toggle("on",scrollY>(hero?hero.offsetHeight-80:500))};addEventListener("scroll",onS,{passive:true});onS();
   // линия шагов
   var fl=document.querySelector(".flow");if(fl){if("IntersectionObserver" in window&&!R){new IntersectionObserver(function(en,o){en.forEach(function(x){if(x.isIntersecting){fl.classList.add("drawn");o.disconnect()}})},{threshold:.3}).observe(fl)}else fl.classList.add("drawn")}

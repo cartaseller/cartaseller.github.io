@@ -38,6 +38,7 @@ header.hero{background:#1E1E1E;color:#F6F3EE;padding:28px 0 72px;position:relati
 header.hero::before{content:"";position:absolute;width:700px;height:700px;right:-220px;top:-320px;background:radial-gradient(circle,rgba(196,162,110,.4),transparent 62%);pointer-events:none}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:56px;position:relative}
 .logo{font-family:var(--serif);font-size:30px;letter-spacing:.04em;color:#F6F3EE;text-decoration:none}
+.nv{display:flex;gap:20px;font-size:14px}.nv a{color:#CFC8BD;text-decoration:none}.nv a:hover{color:#fff}@media(max-width:520px){.nv a:first-child{display:none}}
 .top a.back{color:#CFC8BD;font-size:14px;text-decoration:none}.top a.back:hover{color:#fff}
 .tag{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.2em;color:#C4A26E;margin-bottom:18px}
 .tag i{width:8px;height:8px;border-radius:50%;background:#C4A26E}
@@ -94,7 +95,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);f
 </head>
 <body>
 <header class="hero"><div class="wrap">
-  <div class="top"><a class="logo" href="index.html">Carta</a><a class="back" href="index.html">О Carta →</a></div>
+  <div class="top"><a class="logo" href="index.html">Carta</a><nav class="nv"><a href="calc.html">Калькулятор</a><a href="blog.html">Статьи</a><a href="index.html">О Carta</a></nav></div>
   <div class="tag"><i></i>БЕСПЛАТНО · БЕЗ РЕГИСТРАЦИИ</div>
   <h1>Проверьте название<br><span>своей карточки</span></h1>
   <p class="lead">Вставьте название товара с Ozon или Wildberries — за секунду покажем, что в нём мешает продажам и рискует нарушить правила площадки.</p>
@@ -145,7 +146,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);f
   <p class="hint" style="margin-top:22px">Проверка работает прямо в вашем браузере — название никуда не отправляется.</p>
 </div></section>
 
-<footer><div class="wrap">Carta — система сильной карточки для Ozon и Wildberries · <a href="index.html">cartaseller.github.io</a> · <a href="https://vk.ru/carta.seller" target="_blank" rel="noopener">Carta во ВКонтакте</a></div></footer>
+<footer><div class="wrap">Carta — система сильной карточки для Ozon и Wildberries · <a href="index.html">cartaseller.github.io</a> · <a href="calc.html">Калькулятор</a> · <a href="blog.html">Статьи</a> · <a href="https://vk.ru/carta.seller" target="_blank" rel="noopener">Carta во ВКонтакте</a></div></footer>
 
 <script>
 (function(){
